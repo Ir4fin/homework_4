@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.text;
@@ -21,26 +22,31 @@ public class PracticeFormTest {
     @Test
     void fillFormTests() {
         open("/automation-practice-form");
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
+        executeJavaScript("$('footer').remove()");
+        executeJavaScript("$('#fixedban').remove()");
+
         $("#firstName").setValue("Radja");
         $("#lastName").setValue("Nainggolan");
         $("#userEmail").setValue("radja.n@gmail.com");
-        $(byText("Male")).click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").setValue("1234567890");
         $("#dateOfBirthInput").click();
-        $("select.react-datepicker__month-select").click();
         $("select.react-datepicker__month-select").selectOption("May");
-        $("select.react-datepicker__year-select").click();
         $("select.react-datepicker__year-select").selectOption("1988");
-        $(".react-datepicker__day--004").click();
-        $("#subjectsInput").setValue("di").pressEnter();
-        $(byText("Music")).click();
+        $(".react-datepicker__day--004:not(.react-datepicker__day--outside-month)").click();
+        $("#subjectsInput").setValue("Hindi").pressEnter();
+        $("#hobbiesWrapper").$(byText("Music")).click();
         $("#uploadPicture").uploadFromClasspath("foto.jpg");
         $("#currentAddress").setValue("ul. Lenina, d.1");
         $("#state").click();
-        $(byText("Uttar Pradesh")).click();
+        $("#stateCity-wrapper").$(byText("Uttar Pradesh")).click();
         $("#city").click();
-        $(byText("Merrut")).click();
+        $("#stateCity-wrapper").$(byText("Merrut")).click();
         $("#submit").click();
+
+        $(".modal-dialog").should(appear);
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
 
         $(".table-responsive").shouldHave(
                 text("Radja"),
