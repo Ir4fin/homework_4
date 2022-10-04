@@ -20,7 +20,7 @@ public class PracticeFormPage {
     private SelenideElement firstNameInput = $("#firstName"),
     lastNameInput = $("#lastName"),
     emailInput = $("#userEmail"),
-    genderInput = $("#genterWrapper");
+
 
     private final static String TITLE_TEXT = "Student Registration Form";
 
